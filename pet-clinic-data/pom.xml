@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>com.diligentgroup</groupId>
 		<artifactId>sfg-thv-pet-clinic</artifactId>
-		<version>0.0.20190103-1517</version>
+		<version>0.0.20190103-1518-SNAPSHOT</version>
 	</parent>
 	<properties><spring-boot.repackage.skip>true</spring-boot.repackage.skip></properties>
 	<dependencies>
