@@ -7,8 +7,6 @@ import com.diligentgroup.sfgthvpetclinic.model.Owner;
 import com.diligentgroup.sfgthvpetclinic.model.Vet;
 import com.diligentgroup.sfgthvpetclinic.services.OwnerService;
 import com.diligentgroup.sfgthvpetclinic.services.VetService;
-import com.diligentgroup.sfgthvpetclinic.services.map.OwnerServiceMap;
-import com.diligentgroup.sfgthvpetclinic.services.map.VetServiceMap;
 
 @Component
 public class DataLoader implements CommandLineRunner {
