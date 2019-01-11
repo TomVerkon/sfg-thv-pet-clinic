@@ -1,9 +1,6 @@
-package com.diligentgroup.sfgthvpetclinic.visit;
+package com.diligentgroup.sfgthvpetclinic.model;
 
 import java.time.LocalDate;
-
-import com.diligentgroup.sfgthvpetclinic.model.BaseEntity;
-import com.diligentgroup.sfgthvpetclinic.model.Pet;
 
 public class Visit extends BaseEntity {
 
