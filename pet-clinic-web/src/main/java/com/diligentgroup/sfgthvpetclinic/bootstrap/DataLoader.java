@@ -1,9 +1,12 @@
 package com.diligentgroup.sfgthvpetclinic.bootstrap;
 
+import java.time.LocalDate;
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import com.diligentgroup.sfgthvpetclinic.model.Owner;
+import com.diligentgroup.sfgthvpetclinic.model.Pet;
 import com.diligentgroup.sfgthvpetclinic.model.PetType;
 import com.diligentgroup.sfgthvpetclinic.model.Vet;
 import com.diligentgroup.sfgthvpetclinic.services.OwnerService;
@@ -40,11 +43,29 @@ public class DataLoader implements CommandLineRunner {
 		Owner owner = new Owner();
 		owner.setFirstName("Michael");
 		owner.setLastName("Weston");
+		owner.setAddress("123 Main St");
+		owner.setCity("Roswell");
+		owner.setTelephone("770-591-4515");
+		Pet pet = new Pet();
+		pet.setOwner(owner);
+		pet.setName("Fido");
+		pet.setPetType(dog);
+		pet.setBirthDate(LocalDate.now());
+		owner.getPets().add(pet);
 		ownerService.save(owner);
 		
 		owner = new Owner();
 		owner.setFirstName("Fiona");
 		owner.setLastName("Glenanne");
+		owner.setAddress("456 First St");
+		owner.setCity("Griffin");
+		owner.setTelephone("770-555-1212");
+		pet = new Pet();
+		pet.setOwner(owner);
+		pet.setName("Felix");
+		pet.setPetType(cat);
+		pet.setBirthDate(LocalDate.now());
+		owner.getPets().add(pet);
 		ownerService.save(owner);
 		
 		System.out.println("Owners loaded!");

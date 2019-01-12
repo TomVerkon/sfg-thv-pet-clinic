@@ -2,6 +2,10 @@ package com.diligentgroup.sfgthvpetclinic.model;
 
 public class Person  extends BaseEntity {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3133750493301081164L;
 	private String firstName;
 	private String lastName;
 

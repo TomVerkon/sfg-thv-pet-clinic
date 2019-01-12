@@ -3,12 +3,26 @@ package com.diligentgroup.sfgthvpetclinic.services.map;
 import java.util.Set;
 
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import com.diligentgroup.sfgthvpetclinic.model.Owner;
 import com.diligentgroup.sfgthvpetclinic.services.OwnerService;
+import com.diligentgroup.sfgthvpetclinic.services.PetService;
+import com.diligentgroup.sfgthvpetclinic.services.PetTypeService;
 
 @Service
 public class OwnerServiceMap extends AbstractMapService<Owner, Long> implements OwnerService {
+	
+	private PetService petService;
+	private PetTypeService petTypeService;
+	
+	
+
+	public OwnerServiceMap(PetService petService, PetTypeService petTypeService) {
+		super();
+		this.petService = petService;
+		this.petTypeService = petTypeService;
+	}
 
 	@Override
 	public Owner findById(Long id) {
@@ -22,7 +36,23 @@ public class OwnerServiceMap extends AbstractMapService<Owner, Long> implements 
 
 	@Override
 	public Owner save(Owner owner) {
-		return super.save(owner);
+		if (owner != null) {
+			if (!CollectionUtils.isEmpty(owner.getPets())) {
+				owner.getPets().forEach(pet -> {
+					if (pet.getPetType() != null) {
+						if (pet.getPetType().getId() == null) {
+							pet.setPetType(petTypeService.save(pet.getPetType()) );
+						}
+					} else {
+						throw new RuntimeException("PetType is required!");
+					}
+				});
+			}
+			return super.save(owner);
+		} else {
+			// passed owner is null
+			return owner;
+		}		
 	}
 
 	@Override

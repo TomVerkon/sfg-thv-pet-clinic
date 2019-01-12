@@ -2,6 +2,10 @@ package com.diligentgroup.sfgthvpetclinic.model;
 
 public class PetType extends BaseEntity {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2481025213761848619L;
 	private String name;
 
 	public String getName() {
