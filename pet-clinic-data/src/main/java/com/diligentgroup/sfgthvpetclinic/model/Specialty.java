@@ -1,5 +1,8 @@
 package com.diligentgroup.sfgthvpetclinic.model;
 
+import lombok.ToString;
+
+@ToString
 public class Specialty extends BaseEntity {
 	
 	/**

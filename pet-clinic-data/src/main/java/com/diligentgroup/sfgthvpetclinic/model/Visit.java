@@ -2,6 +2,9 @@ package com.diligentgroup.sfgthvpetclinic.model;
 
 import java.time.LocalDate;
 
+import lombok.ToString;
+
+@ToString
 public class Visit extends BaseEntity {
 
 	/**
