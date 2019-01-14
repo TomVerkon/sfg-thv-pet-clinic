@@ -45,29 +45,29 @@ public class DataLoader implements CommandLineRunner {
 		PetType dog = new PetType();
 		dog.setName("Dog");
 		dog = petTypeService.save(dog);
-		System.out.println(dog.toString());
+		//System.out.println(dog.toString());
 
 		PetType cat = new PetType();
 		cat.setName("Cat");
 		cat = petTypeService.save(cat);
-		System.out.println(cat.toString());
+		//System.out.println(cat.toString());
 
 		System.out.println("PetTypes loaded!");
 
 		Specialty radiology = new Specialty();
 		radiology.setDescription("Radiology");
 		radiology = specialtyService.save(radiology);
-		System.out.println(radiology.toString());
+		//System.out.println(radiology.toString());
 
 		Specialty dentistry = new Specialty();
 		dentistry.setDescription("Dentistry");
 		dentistry = specialtyService.save(dentistry);
-		System.out.println(dentistry.toString());
+		//System.out.println(dentistry.toString());
 
 		Specialty surgery = new Specialty();
 		surgery.setDescription("Surgery");
 		surgery = specialtyService.save(surgery);
-		System.out.println(surgery.toString());
+		//System.out.println(surgery.toString());
 
 		System.out.println("Specialties loaded!");
 
@@ -84,7 +84,7 @@ public class DataLoader implements CommandLineRunner {
 		pet.setBirthDate(LocalDate.now());
 		owner.getPets().add(pet);
 		Owner savedOwner = ownerService.save(owner);
-		System.out.println(savedOwner.toString());
+		//System.out.println(savedOwner.toString());
 		// System.out.println(owner);
 
 		owner = new Owner();

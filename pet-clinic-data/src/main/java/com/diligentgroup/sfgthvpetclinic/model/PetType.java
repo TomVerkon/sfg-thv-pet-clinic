@@ -2,7 +2,6 @@ package com.diligentgroup.sfgthvpetclinic.model;
 
 import lombok.ToString;
 
-@ToString
 public class PetType extends BaseEntity {
 	
 	/**

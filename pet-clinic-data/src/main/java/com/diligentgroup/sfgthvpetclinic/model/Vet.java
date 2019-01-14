@@ -5,7 +5,6 @@ import java.util.Set;
 
 import lombok.ToString;
 
-@ToString
 public class Vet extends Person {
 	
 	/**
