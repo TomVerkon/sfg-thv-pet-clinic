@@ -1,11 +1,15 @@
 package com.diligentgroup.sfgthvpetclinic.model;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -36,6 +40,9 @@ public class Pet extends BaseEntity {
 	
 	@Column(name = "name")
 	private String name;
+	
+	@OneToMany(mappedBy = "pet", cascade = CascadeType.ALL)
+	private Set<Visit> visits;
 
 	public PetType getPetType() {
 		return petType;
@@ -67,6 +74,17 @@ public class Pet extends BaseEntity {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public Set<Visit> getVisits() {
+		if (this.visits == null) {
+			this.visits = new HashSet<Visit>();
+		}
+		return visits;
+	}
+
+	public void setVisits(Set<Visit> visits) {
+		this.visits = visits;
 	}
 
 }
