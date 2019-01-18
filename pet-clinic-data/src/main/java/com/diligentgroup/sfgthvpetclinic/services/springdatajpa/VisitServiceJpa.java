@@ -4,11 +4,13 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Service;
 
 import com.diligentgroup.sfgthvpetclinic.model.Visit;
 import com.diligentgroup.sfgthvpetclinic.repositories.VisitRepository;
 import com.diligentgroup.sfgthvpetclinic.services.VisitService;
 
+@Service
 @Profile("springdatajpa")
 public class VisitServiceJpa implements VisitService {
 	
