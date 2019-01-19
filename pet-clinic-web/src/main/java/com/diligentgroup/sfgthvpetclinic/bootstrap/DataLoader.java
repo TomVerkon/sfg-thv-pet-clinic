@@ -53,7 +53,7 @@ public class DataLoader implements CommandLineRunner {
 		System.out.println("PetTypes loaded!");
 
 		Specialty radiology = specialtyService.save(Specialty.builder().description("Radiology").build());
-		Specialty dentistry = specialtyService.save(Specialty.builder().description("Dentistry").build());
+		specialtyService.save(Specialty.builder().description("Dentistry").build());
 		Specialty surgery = specialtyService.save(Specialty.builder().description("Surgery").build());
 
 		System.out.println("Specialties loaded!");
@@ -62,7 +62,7 @@ public class DataLoader implements CommandLineRunner {
 				.telephone("770-591-4515").firstName("Michael").lastName("Weston").build();
 		Pet michaelsPet = Pet.builder().birthDate(LocalDate.now()).name("Fido").petType(dog).owner(owner).build();
 		owner.addPet(michaelsPet);
-		Owner savedOwner = ownerService.save(owner);
+		ownerService.save(owner);
 
 		owner = Owner.builder().address("456 First St").city("Griffin")
 				.telephone("770-555-1212").firstName("Fiona").lastName("Glenanne").build();
