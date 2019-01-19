@@ -10,10 +10,12 @@ import com.diligentgroup.sfgthvpetclinic.model.Pet;
 import com.diligentgroup.sfgthvpetclinic.model.PetType;
 import com.diligentgroup.sfgthvpetclinic.model.Specialty;
 import com.diligentgroup.sfgthvpetclinic.model.Vet;
+import com.diligentgroup.sfgthvpetclinic.model.Visit;
 import com.diligentgroup.sfgthvpetclinic.services.OwnerService;
 import com.diligentgroup.sfgthvpetclinic.services.PetTypeService;
 import com.diligentgroup.sfgthvpetclinic.services.SpecialtyService;
 import com.diligentgroup.sfgthvpetclinic.services.VetService;
+import com.diligentgroup.sfgthvpetclinic.services.VisitService;
 
 @Component
 public class DataLoader implements CommandLineRunner {
@@ -22,14 +24,16 @@ public class DataLoader implements CommandLineRunner {
 	private final VetService vetService;
 	private final PetTypeService petTypeService;
 	private final SpecialtyService specialtyService;
+	private final VisitService visitService;
 
 	public DataLoader(OwnerService ownerService, VetService vetService, PetTypeService petTypeService,
-			SpecialtyService specialtyService) {
+			SpecialtyService specialtyService, VisitService visitService) {
 		super();
 		this.ownerService = ownerService;
 		this.vetService = vetService;
 		this.petTypeService = petTypeService;
 		this.specialtyService = specialtyService;
+		this.visitService = visitService;
 	}
 
 	@Override
@@ -42,83 +46,50 @@ public class DataLoader implements CommandLineRunner {
 	}
 
 	private void loadData() {
-		PetType dog = new PetType();
-		dog.setName("Dog");
-		dog = petTypeService.save(dog);
-		//System.out.println(dog.toString());
-
-		PetType cat = new PetType();
-		cat.setName("Cat");
-		cat = petTypeService.save(cat);
-		//System.out.println(cat.toString());
+		
+		PetType dog = petTypeService.save(PetType.builder().name("Dog").build());
+		PetType cat = petTypeService.save(PetType.builder().name("Cat").build());
 
 		System.out.println("PetTypes loaded!");
 
-		Specialty radiology = new Specialty();
-		radiology.setDescription("Radiology");
-		radiology = specialtyService.save(radiology);
-		//System.out.println(radiology.toString());
-
-		Specialty dentistry = new Specialty();
-		dentistry.setDescription("Dentistry");
-		dentistry = specialtyService.save(dentistry);
-		//System.out.println(dentistry.toString());
-
-		Specialty surgery = new Specialty();
-		surgery.setDescription("Surgery");
-		surgery = specialtyService.save(surgery);
-		//System.out.println(surgery.toString());
+		Specialty radiology = specialtyService.save(Specialty.builder().description("Radiology").build());
+		Specialty dentistry = specialtyService.save(Specialty.builder().description("Dentistry").build());
+		Specialty surgery = specialtyService.save(Specialty.builder().description("Surgery").build());
 
 		System.out.println("Specialties loaded!");
 
-		Owner owner = new Owner();
-		owner.setFirstName("Michael");
-		owner.setLastName("Weston");
-		owner.setAddress("123 Main St");
-		owner.setCity("Roswell");
-		owner.setTelephone("770-591-4515");
-		Pet pet = new Pet();
-		pet.setOwner(owner);
-		pet.setName("Fido");
-		pet.setPetType(dog);
-		pet.setBirthDate(LocalDate.now());
-		owner.getPets().add(pet);
+		Owner owner = Owner.builder().address("123 Main St").city("Roswell")
+				.telephone("770-591-4515").firstName("Michael").lastName("Weston").build();
+		Pet michaelsPet = Pet.builder().birthDate(LocalDate.now()).name("Fido").petType(dog).owner(owner).build();
+		owner.addPet(michaelsPet);
 		Owner savedOwner = ownerService.save(owner);
-		//System.out.println(savedOwner.toString());
-		// System.out.println(owner);
 
-		owner = new Owner();
-		owner.setFirstName("Fiona");
-		owner.setLastName("Glenanne");
-		owner.setAddress("456 First St");
-		owner.setCity("Griffin");
-		owner.setTelephone("770-555-1212");
-		pet = new Pet();
-		pet.setOwner(owner);
-		pet.setName("Felix");
-		pet.setPetType(cat);
-		pet.setBirthDate(LocalDate.now());
-		owner.getPets().add(pet);
+		owner = Owner.builder().address("456 First St").city("Griffin")
+				.telephone("770-555-1212").firstName("Fiona").lastName("Glenanne").build();
+		Pet fionasPet = Pet.builder().birthDate(LocalDate.now()).name("Felix").petType(cat).owner(owner).build();
+		owner.addPet(fionasPet);
 		ownerService.save(owner);
-		System.out.println(owner);
 
 		System.out.println("Owners loaded!");
 
-		Vet vet = new Vet();
-		vet.setFirstName("Sam");
-		vet.setLastName("Axe");
-		vet.getSpecialties().add(surgery);
+		Vet vet = Vet.builder().firstName("Sam").lastName("Axe").build();
+		vet.addSpecialty(surgery);
 		vetService.save(vet);
-		System.out.println(vet);
 
-		vet = new Vet();
-		vet.setFirstName("Tom");
-		vet.setLastName("Lemay");
-		vet.getSpecialties().add(radiology);
+		vet = Vet.builder().firstName("Tom").lastName("Lemay").build();
+		vet.addSpecialty(radiology);
 		vetService.save(vet);
-		System.out.println(vet);
 
 		System.out.println("Vets loaded!");
+		
+		Visit catVisit = Visit.builder().date(LocalDate.now()).description("Sneezy Kitty").pet(fionasPet).build();
+        visitService.save(catVisit);
+
+		catVisit = Visit.builder().date(LocalDate.now()).description("Soft Kitty").pet(fionasPet).build();
+        visitService.save(catVisit);
+
+        System.out.println("Loaded Visits....");
+
 	}
 
 }

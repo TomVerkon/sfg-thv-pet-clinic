@@ -3,7 +3,6 @@ package com.diligentgroup.sfgthvpetclinic.model;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -11,6 +10,16 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "vets")
 public class Vet extends Person {
@@ -24,17 +33,15 @@ public class Vet extends Person {
 	@JoinTable(name = "vet_specialties",
 			joinColumns = @JoinColumn(name = "vet_id"), 
 			inverseJoinColumns = @JoinColumn(name = "specialty_id"))
-	private Set<Specialty> specialties;
+	private Set<Specialty> specialties = new HashSet<Specialty>();
 
-	public Set<Specialty> getSpecialties() {
-		if (this.specialties == null) {
-			this.specialties = new HashSet<Specialty>();
-		}
-		return specialties;
+	@Builder
+	public Vet(String firstName, String lastName) {
+		super(firstName, lastName);
 	}
-
-	public void setSpecialties(Set<Specialty> specialties) {
-		this.specialties = specialties;
+	
+	public void addSpecialty(Specialty specialty) {
+		specialties.add(specialty);
 	}
 
 }
