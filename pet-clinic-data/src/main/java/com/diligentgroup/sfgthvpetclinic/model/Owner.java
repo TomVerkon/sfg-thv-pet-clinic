@@ -9,23 +9,20 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Setter
 @Getter
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "owners")
 public class Owner extends Person {
-
+	
+	
 	@Builder
-	public Owner(String firstName, String lastName, String address, String city, String telephone) {
-		super(firstName, lastName);
+	public Owner(Long id, String firstName, String lastName, String address, String city, String telephone) {
+		super(id, firstName, lastName);
 		this.address = address;
 		this.city = city;
 		this.telephone = telephone;

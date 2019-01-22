@@ -1,5 +1,6 @@
 package com.diligentgroup.sfgthvpetclinic.services.map;
 
+import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.context.annotation.Profile;
@@ -12,13 +13,11 @@ import com.diligentgroup.sfgthvpetclinic.services.PetService;
 import com.diligentgroup.sfgthvpetclinic.services.PetTypeService;
 
 @Service
-@Profile({"default", "map"})
+@Profile({ "default", "map" })
 public class OwnerServiceMap extends AbstractMapService<Owner, Long> implements OwnerService {
-	
+
 	private PetService petService;
 	private PetTypeService petTypeService;
-	
-	
 
 	public OwnerServiceMap(PetService petService, PetTypeService petTypeService) {
 		super();
@@ -43,7 +42,7 @@ public class OwnerServiceMap extends AbstractMapService<Owner, Long> implements 
 				owner.getPets().forEach(pet -> {
 					if (pet.getPetType() != null) {
 						if (pet.getPetType().getId() == null) {
-							pet.setPetType(petTypeService.save(pet.getPetType()) );
+							pet.setPetType(petTypeService.save(pet.getPetType()));
 						}
 					} else {
 						throw new RuntimeException("PetType is required!");
@@ -57,7 +56,7 @@ public class OwnerServiceMap extends AbstractMapService<Owner, Long> implements 
 		} else {
 			// passed owner is null
 			return owner;
-		}		
+		}
 	}
 
 	@Override
@@ -72,8 +71,11 @@ public class OwnerServiceMap extends AbstractMapService<Owner, Long> implements 
 
 	@Override
 	public Owner findByLastName(String lastName) {
-		// TODO Auto-generated method stub
+		Optional<Owner> optionalOwner = findAll().stream()
+				.filter(owner-> owner.getLastName().equals(lastName)).findFirst();
+		if (optionalOwner.isPresent()) {
+			return optionalOwner.get();
+		}
 		return null;
 	}
-
 }
