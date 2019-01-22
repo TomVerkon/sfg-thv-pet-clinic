@@ -3,26 +3,49 @@ package com.diligentgroup.sfgthvpetclinic.services.map;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.fail;
+
+import java.time.LocalDate;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.diligentgroup.sfgthvpetclinic.model.Owner;
+import com.diligentgroup.sfgthvpetclinic.model.Pet;
+import com.diligentgroup.sfgthvpetclinic.model.PetType;
 import com.diligentgroup.sfgthvpetclinic.services.OwnerService;
 
 class OwnerServiceMapTest {
 
 	private OwnerService ownerService;
 	private String[] lastNames = {"Smith","Jones", "Doe"};
+	private String[] petNames = {"Billy","Porky"};
+	private String[] petTypeNames = {"Goat","Pig"};
 	private Long[] ids = {1L, 2L, 3L};
 
 	@BeforeEach
 	void setUp() throws Exception {
 		this.ownerService = new OwnerServiceMap(new PetServiceMap(), new PetTypeServiceMap());
-		this.ownerService.save(Owner.builder().id(ids[0]).lastName(lastNames[0]).build());
-		this.ownerService.save(Owner.builder().id(ids[1]).lastName(lastNames[1]).build());
+		Owner owner = Owner.builder().id(ids[0]).lastName(lastNames[0]).build();
+		owner.addPet(Pet.builder()
+				.birthDate(LocalDate.now())
+				.name(petNames[0])
+				.owner(owner)
+				.petType(PetType.builder()
+						.name(petTypeNames[0])
+						.build())
+				.build());
+		this.ownerService.save(owner);
+		owner = Owner.builder().id(ids[1]).lastName(lastNames[1]).build();
+		owner.addPet(Pet.builder()
+				.birthDate(LocalDate.now())
+				.name(petNames[1])
+				.owner(owner)
+				.petType(PetType.builder()
+						.name(petTypeNames[1])
+						.build())
+				.build());
+		this.ownerService.save(owner);
 	}
 
 	@AfterEach
@@ -37,8 +60,16 @@ class OwnerServiceMapTest {
 
 	@Test
 	void testFindByIdLong() {
-		assertNotNull(this.ownerService.findById(ids[0]));
-		assertEquals(ids[0], this.ownerService.findById(ids[0]).getId());
+		Owner owner = ownerService.findById(ids[0]);
+		assertNotNull(owner);
+		assertEquals(ids[0], owner.getId());
+		assertEquals(1, owner.getPets().size());
+		owner.getPets().forEach(pet -> {
+			assertNotNull(pet.getPetType());
+			assertEquals(pet.getPetType().getName(), petTypeNames[0]);
+			assertEquals(owner.getId(), pet.getOwner().getId());
+			assertEquals(pet.getName(), petNames[0]);
+		});
 	}
 
 	@Test
