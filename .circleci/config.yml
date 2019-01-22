@@ -29,6 +29,9 @@ jobs:
           - v1-dependencies-{{ checksum "pom.xml" }}
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
+      
+      # I added this step becase data jar was not being found. Needed to install the jar in the repository first    
+      - run: mvn insatll -DskipTests    
 
       - run: mvn dependency:go-offline
 
