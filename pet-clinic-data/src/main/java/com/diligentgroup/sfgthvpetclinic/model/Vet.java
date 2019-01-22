@@ -12,6 +12,7 @@ import javax.persistence.Table;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Setter
@@ -30,7 +31,7 @@ public class Vet extends Person {
 		super(id, firstName, lastName);
 	}
 	
-	
+	public Vet() {}
 	
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "vet_specialties",
